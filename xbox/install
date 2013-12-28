@@ -1,0 +1,28 @@
+#!/bin/bash
+echo -e "Installing packages..." 
+apt-get install xboxdrv 
+echo -e "......................................................DONE\n";
+
+
+cd /home/pi/xbox
+echo -e "Installing script..." 
+chown pi:pi xbox
+chown root:root rc.local
+chown pi:pi mapping_xbox 
+chown pi:pi mapping_keyboard
+
+chmod 640 mapping_xbox 
+chmod 666 mapping_keyboard
+chmod 751 xbox
+chmod 751 rc.local 
+
+mv /etc/rc.local /etc/rc.local.bak
+cp rc.local /etc/rc.local 
+mv /home/pi/.xbmc/userdata/keymaps/keyboard.xml /home/pi/.xbmc/userdata/keymaps/keyboard.bak
+cp mapping_keyboard /home/pi/.xbmc/userdata/keymaps/keyboard.xml
+echo -e "......................................................DONE\n";
+
+
+echo -e "Restarting..." 
+reboot
+echo -e "......................................................DONE\n";
